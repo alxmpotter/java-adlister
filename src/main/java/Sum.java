@@ -16,4 +16,6 @@ public class Sum extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("<h3>Sum response: " + (a+b) + "</h3>");
     }
+
+
 }
