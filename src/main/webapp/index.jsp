@@ -2,7 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title><%= "some title" %></title>
+    <jsp:include page="partials/style.jsp">
+        <jsp:param name="title" value="Welcome to my site!" />
+    </jsp:include>
 </head>
 <body>
     <c:if test="true">
