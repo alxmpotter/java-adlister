@@ -12,17 +12,15 @@ public class ViewLoginServlet extends HttpServlet {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws ServletException, IOException {
-
-
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            if (username.equals("admin") && password.equals("password")) {
+        if (username.equals("admin") && password.equals("password")) {
                 response.sendRedirect("/profile");
             } else {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
