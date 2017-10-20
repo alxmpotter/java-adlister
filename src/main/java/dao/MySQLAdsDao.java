@@ -10,14 +10,14 @@ import java.util.List;
 
 public class MySQLAdsDao implements Ads {
 
-    Connection connection = null;
+    private Connection connection = null;
 
 
 
     public MySQLAdsDao() {
         try {
             DriverManager.registerDriver(new Driver());
-            Connection connection = DriverManager.getConnection(
+            connection = DriverManager.getConnection(
                     Config.getUrl(),
                     Config.getUsername(),
                     Config.getPassword()
@@ -28,16 +28,10 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
-    public List<Ad> all(){
-        return all(0L);
-    }
 
-    public List<Ad> all(Long id) {
+    @Override
+    public List<Ad> all() {
         String selectQuery = "SELECT * FROM ads";
-
-        if(id > 0){
-            selectQuery += "WHERE id = " + id;
-        }
 
         List<Ad> ads = new ArrayList<>();
         try{
@@ -62,15 +56,10 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public Long insert(Ad ad) {
-        Long id = 0L;
-        String username = "Alex";
-        String email = "alxpotter@gmail.com";
-        String password = "adsadsads";
-
-        String query = String.format( "INSERT INTO ads(user_id, title, description) VALUES ('%s', '%s', '%s')",
-        username,
-        email,
-        password
+        String query = String.format( "INSERT INTO ads(user_id, title, description) VALUES ('%d', '%s', '%s')",
+            ad.getUserId(),
+            ad.getTitle(),
+            ad.getDescription()
         );
 
         try {
@@ -78,11 +67,11 @@ public class MySQLAdsDao implements Ads {
             stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
             if(rs.next()){
-                id = rs.getLong(1);
+                 return rs.getLong(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return id;
+        return null;
     }
 }
